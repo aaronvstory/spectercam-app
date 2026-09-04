@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpecterCam</title>
+<meta name="description" content="SpecterCam — a PC desktop app plus an Android phone app that streams any video into the phone camera. Download v1.5.108.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --bg:#0b0b0e; --panel:#111117; --card:#16161d; --card2:#1c1c25;
+    --gold:#ffd54a; --gold2:#efb63c; --gold-soft:#2a2413;
+    --ink:#ecebf0; --dim:#9a99a8; --faint:#6a6a78;
+    --green:#7fd6a0; --amber:#ffcf6b;
+    --line:#2a2a35; --line2:#33333f;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --disp:"Sora",system-ui,sans-serif;
+    --mono:"IBM Plex Mono","Cascadia Code",monospace;
+  }
+  *{margin:0;box-sizing:border-box}
+  img{max-width:100%}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(120% 70% at 82% -6%, rgba(255,213,74,.08), transparent 44%),
+      radial-gradient(140% 100% at 50% -10%, #16161f 0%, #0e0e13 50%, #0a0a0d 100%);
+    color:var(--ink); font:16px/1.55 var(--sans);
+    -webkit-font-smoothing:antialiased; min-height:100vh; overflow-x:hidden;
+  }
+  a{color:inherit}
+  .wrap{max-width:960px; margin:0 auto; padding:0 22px}
+
+  /* ---- top bar ---- */
+  .top{display:flex; align-items:center; gap:12px; padding:18px 22px; max-width:960px; margin:0 auto}
+  .mark{width:30px; height:30px; flex:0 0 auto; filter:drop-shadow(0 1px 4px #0008)}
+  .brand{font:700 18px/1 var(--disp); letter-spacing:.01em}
+  .brand b{color:var(--gold)}
+  .top .spacer{margin-left:auto}
+  .ghlink{font:500 13px/1 var(--sans); color:var(--dim); text-decoration:none;
+    border:1px solid var(--line); border-radius:20px; padding:8px 14px; display:inline-flex; align-items:center; gap:7px;
+    white-space:nowrap; transition:border-color .12s, color .12s}
+  .ghlink:hover{color:var(--ink); border-color:#ffd54a44}
+  .ghlink svg{width:15px; height:15px}
+
+  /* ---- hero ---- */
+  .hero{padding:52px 0 40px; text-align:center}
+  .pill{display:inline-flex; align-items:center; gap:8px; font:500 12.5px/1 var(--mono);
+    color:var(--gold); background:var(--gold-soft); border:1px solid #ffd54a3a; border-radius:20px; padding:7px 14px}
+  .pill .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green)}
+  h1{font:700 clamp(40px,7vw,66px)/1.02 var(--disp); letter-spacing:-.02em; margin:20px 0 0; text-wrap:balance}
+  h1 b{color:var(--gold)}
+  .tag{font-size:clamp(16px,2.4vw,19px); color:var(--dim); margin:16px auto 0; max-width:34ch; text-wrap:balance}
+
+  .cta{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center; margin-top:34px}
+  .dl{display:inline-flex; align-items:center; gap:11px; text-decoration:none;
+    font:600 16px/1 var(--sans); color:#241f07;
+    background:linear-gradient(180deg,#ffe07a,#f0b93a); border:1px solid #ffdf7a;
+    border-radius:13px; padding:15px 26px; box-shadow:0 10px 30px -8px #ffd54a55, 0 1px 0 #fff5 inset;
+    transition:transform .1s, box-shadow .15s}
+  .dl:hover{transform:translateY(-1px); box-shadow:0 14px 34px -8px #ffd54a77, 0 1px 0 #fff5 inset}
+  .dl:active{transform:translateY(0)}
+  .dl svg{width:19px; height:19px}
+  .dl .sz{font:500 12px/1 var(--mono); color:#3a3208; opacity:.8}
+  .alt{font:500 14px/1 var(--sans); color:var(--dim); text-decoration:none; border-bottom:1px solid transparent; padding-bottom:1px}
+  .alt:hover{color:var(--ink); border-bottom-color:#ffd54a55}
+  .meta{margin-top:20px; color:var(--faint); font:500 13px/1.5 var(--mono)}
+  .meta .nw{white-space:nowrap}
+
+  /* ---- section scaffold ---- */
+  section{padding:26px 0}
+  .eyebrow{font:600 12px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--gold2); margin-bottom:16px}
+
+  /* ---- what you get ---- */
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .card{background:linear-gradient(180deg,var(--card),#131319); border:1px solid var(--line);
+    border-radius:15px; padding:18px 18px 20px}
+  .card .ic{width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+    background:var(--gold-soft); border:1px solid #ffd54a2e; color:var(--gold); margin-bottom:13px}
+  .card .ic svg{width:19px; height:19px}
+  .card h3{font:600 16px/1.2 var(--disp); margin-bottom:6px}
+  .card p{font-size:14px; color:var(--dim); line-height:1.5}
+  .card p code{font:500 12.5px/1 var(--mono); color:var(--ink); background:#ffffff0d; border:1px solid var(--line); border-radius:5px; padding:2px 6px}
+
+  /* ---- install ---- */
+  .grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+  .steps{background:linear-gradient(180deg,var(--card),#131319); border:1px solid var(--line); border-radius:15px; padding:20px}
+  .steps h3{font:600 16px/1 var(--disp); display:flex; align-items:center; gap:9px; margin-bottom:15px}
+  .steps h3 .tagpc{font:500 11px/1 var(--mono); color:var(--faint); border:1px solid var(--line); border-radius:6px; padding:3px 7px}
+  ol.st{list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:12px}
+  ol.st li{counter-increment:s; position:relative; padding-left:34px; font-size:14.5px; color:var(--ink); overflow-wrap:anywhere}
+  ol.st li::before{content:counter(s); position:absolute; left:0; top:-1px; width:23px; height:23px; border-radius:7px;
+    display:grid; place-items:center; font:600 12px/1 var(--mono); color:var(--gold);
+    background:var(--gold-soft); border:1px solid #ffd54a2e}
+  ol.st li .s{color:var(--dim)}
+  ol.st code{font:500 12.5px/1 var(--mono); color:var(--gold); background:#ffffff0d; border:1px solid var(--line); border-radius:5px; padding:2px 6px}
+
+  /* ---- licence note ---- */
+  .lic{display:flex; gap:15px; align-items:flex-start; background:linear-gradient(180deg,#1a1710,#141119);
+    border:1px solid #ffd54a26; border-radius:15px; padding:19px 20px}
+  .lic .ic{flex:0 0 auto; width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+    background:var(--gold-soft); border:1px solid #ffd54a3a; color:var(--gold)}
+  .lic .ic svg{width:20px; height:20px}
+  .lic h3{font:600 15.5px/1.2 var(--disp); margin-bottom:5px}
+  .lic p{font-size:14px; color:var(--dim); line-height:1.55}
+  .lic p + p{margin-top:6px}
+
+  /* ---- what's new ---- */
+  .new{background:linear-gradient(180deg,var(--card),#131319); border:1px solid var(--line); border-radius:15px; padding:20px 22px}
+  .new ul{list-style:none; display:flex; flex-direction:column; gap:11px}
+  .new li{position:relative; padding-left:24px; font-size:14.5px; color:var(--ink); line-height:1.5}
+  .new li::before{content:""; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:2px;
+    background:var(--gold); box-shadow:0 0 7px #ffd54a66}
+  .new li b{font-weight:600}
+  .new li span{color:var(--dim)}
+
+  /* ---- footer ---- */
+  footer{padding:34px 0 46px; text-align:center; color:var(--faint); font-size:13px; border-top:1px solid var(--line); margin-top:22px}
+  footer a{color:var(--dim); text-decoration:none; border-bottom:1px solid transparent}
+  footer a:hover{color:var(--gold); border-bottom-color:#ffd54a44}
+
+  @media (max-width:720px){
+    .grid3,.grid2{grid-template-columns:1fr}
+    .hero{padding:38px 0 30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <rect x="2" y="7" width="20" height="18" rx="4" fill="#16161d" stroke="#ffd54a" stroke-width="1.6"/>
+    <circle cx="12" cy="16" r="5" fill="none" stroke="#ffd54a" stroke-width="1.6"/>
+    <circle cx="12" cy="16" r="1.9" fill="#ffd54a"/>
+    <path d="M22 13l7-3v12l-7-3z" fill="#16161d" stroke="#ffd54a" stroke-width="1.6" stroke-linejoin="round"/>
+  </svg>
+  <span class="brand">Specter<b>Cam</b></span>
+  <span class="spacer"></span>
+  <a class="ghlink" href="https://github.com/aaronvstory/spectercam-app/releases" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.83 1.28.83 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    <span>GitHub</span>
+  </a>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="pill"><span class="dot"></span> Latest &nbsp;·&nbsp; v1.5.108</span>
+    <h1>Specter<b>Cam</b></h1>
+    <p class="tag">Stream any video into your phone camera. One PC app. One phone app.</p>
+
+    <div class="cta">
+      <a class="dl" href="https://github.com/aaronvstory/spectercam-app/releases/download/v1.5.108/SpecterCam-1.5.108-dist.zip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        <span>Download for Windows</span>
+        <span class="sz">.zip · 114&nbsp;MB</span>
+      </a>
+      <a class="alt" href="https://github.com/aaronvstory/spectercam-app/releases/tag/v1.5.108">Release notes</a>
+    </div>
+
+    <p class="meta">
+      <span class="nw">Windows 10 / 11 · x64</span> &nbsp;·&nbsp;
+      <span class="nw">Android phone app inside the zip</span> &nbsp;·&nbsp;
+      <span class="nw">OBS / RTMP built in</span>
+    </p>
+  </header>
+
+  <section>
+    <p class="eyebrow">Inside the download</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Desktop app</h3>
+        <p><code>SpecterCam.exe</code> — a portable Windows app. No install. It picks the video and drives the phone.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+        <h3>Phone app</h3>
+        <p><code>SpecterCam-1.5.108.apk</code> — install it on the Android phone. It feeds the video into the camera.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019-9M4 4a16 16 0 0116 16"/><circle cx="6" cy="18" r="2"/></svg></div>
+        <h3>OBS &amp; RTMP</h3>
+        <p>The RTMP server is bundled. Point OBS at it and stream a live scene through to the phone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Set it up</p>
+    <div class="grid2">
+      <div class="steps">
+        <h3>On the PC <span class="tagpc">Windows x64</span></h3>
+        <ol class="st">
+          <li>Unzip the download.</li>
+          <li>Run <code>SpecterCam.exe</code>. <span class="s">Windows may warn about a new app — allow it.</span></li>
+          <li>Connect the phone by USB or Wi-Fi. <span class="s">The app finds it and shows a live preview.</span></li>
+          <li>Pick a video. <span class="s">The preview shows exactly what the phone captures.</span></li>
+        </ol>
+      </div>
+      <div class="steps">
+        <h3>On the phone <span class="tagpc">Android</span></h3>
+        <ol class="st">
+          <li>Copy <code>SpecterCam-1.5.108.apk</code> to the phone.</li>
+          <li>Open it and install. <span class="s">Allow install from this source if asked.</span></li>
+          <li>Open SpecterCam and turn the virtual camera on.</li>
+          <li>Open any camera app. <span class="s">It shows the video from the PC.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="lic">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div>
+        <h3>This is the licensed build</h3>
+        <p>The first run starts a free trial. To keep using it, activate with a code.</p>
+        <p>The phone app shows its device ID on the Activation screen. Send that ID and you get a code back.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">New in v1.5.108</p>
+    <div class="new">
+      <ul>
+        <li><b>Auto fps, width and aspect.</b> <span>The output follows the clip. A 24fps video streams at 24, with no judder.</span></li>
+        <li><b>The preview matches the phone.</b> <span>Drag the frame and it lands where you put it, on both cameras.</span></li>
+        <li><b>Live clip facts.</b> <span>The preview shows the current video resolution, fps, size and length.</span></li>
+        <li><b>Reset recovers a stalled phone.</b> <span>A locked or backgrounded phone no longer leaves the stream dead.</span></li>
+        <li><b>Steadier feed.</b> <span>The preview holds its last frame through a restart instead of cutting out.</span></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    SpecterCam v1.5.108 &nbsp;·&nbsp;
+    <a href="https://github.com/aaronvstory/spectercam-app/releases/latest">Always-latest download</a> &nbsp;·&nbsp;
+    <a href="https://github.com/aaronvstory/spectercam-app">Project on GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
