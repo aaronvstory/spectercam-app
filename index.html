@@ -118,11 +118,8 @@
   .cam-top{display:flex;justify-content:space-between;align-items:center;padding:22px 14px 8px;font-family:'JetBrains Mono';font-size:10px;color:#d9d9e2;position:relative;z-index:2}
   .cam-live{display:flex;align-items:center;gap:5px;color:#ff6a6a;font-weight:700}
   .cam-live .rd{width:6px;height:6px;border-radius:50%;background:#ff6a6a;box-shadow:0 0 7px #ff6a6a;animation:pulse 1.6s infinite}
-  .cam-view{flex:1;position:relative;overflow:hidden;
-    background:
-      linear-gradient(120deg, rgba(245,197,66,.14), transparent 45%),
-      repeating-linear-gradient(58deg,#12233b 0 26px,#16304f 26px 52px),
-      radial-gradient(120% 80% at 30% 15%, #2a4a74 0%, #10233c 55%, #0a1526 100%);}
+  .cam-view{flex:1;position:relative;overflow:hidden;background:#0a1526}
+  .cam-view .cam-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .cam-view .horizon{position:absolute;left:0;right:0;top:52%;height:1px;background:rgba(255,255,255,.18)}
   .cam-view .sun{position:absolute;left:26%;top:24%;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#ffe6a0,#f5b542 60%,transparent 72%);filter:blur(.5px);box-shadow:0 0 30px rgba(245,197,66,.5)}
   .cam-tag{position:absolute;left:10px;bottom:10px;font-family:'JetBrains Mono';font-size:9.5px;color:#eaeaf0;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.14);border-radius:7px;padding:4px 8px;backdrop-filter:blur(4px)}
@@ -299,10 +296,10 @@
       <div class="flowdown" aria-hidden="true">↓</div>
       <div class="phone">
         <span class="notch"></span>
-        <div class="screen" role="img" aria-label="A phone camera app showing an injected scene instead of the real lens.">
+        <div class="screen" role="img" aria-label="A phone camera app showing a video streamed by SpecterCam instead of the real lens.">
           <div class="cam-top"><span class="cam-live"><span class="rd"></span>REC</span><span>4K · 30</span></div>
           <div class="cam-view">
-            <div class="sun"></div><div class="horizon"></div>
+            <img class="cam-img" src="demo.jpg" alt="" aria-hidden="true">
             <div class="cam-tag">your video → the camera</div>
           </div>
           <div class="cam-bar"><span class="thumb"></span><span class="shutter"></span><span class="flip"></span></div>
